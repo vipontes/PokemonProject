@@ -2,9 +2,14 @@ import axios from 'axios';
 import * as environment from '../shared/environment';
 
 const PokemonListService = {
-    getPokemonList: function (result, error) {
-        axios
-            .get(environment.api_url + 'pokemon')
+    getPokemonList: function (nextUrl, result, error) {
+        var url = environment.api_url + 'pokemon';
+
+        if ( nextUrl != null) {
+            url = nextUrl;
+        }
+
+        axios.get(url)
             .then(function (response) {
                 result(response.data);
             })
