@@ -67,13 +67,15 @@ export default class SplashScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <Animated.View style={[styles.box, { transform: [{ translateX: this.transX }] }]}>
-                    <Image source={require("../../assets/images/pokemon-text.png")} style={{ height: 136, width: 370 }} />
+                    <Image source={require("../../assets/images/pokemon-text.png")}
+                        style={{ height: 136, width: 370 }} />
                 </Animated.View>
                 <Animated.View
                     style={[
                         { transform: [{ rotate: concat(this.trans, 'deg') }] },
                     ]}>
-                    <Image source={require("../../assets/images/pokeball.png")} style={{ height: 200, width: 200 }} />
+                    <Image source={require("../../assets/images/pokeball.png")}
+                        style={{ height: 200, width: 200 }} />
                 </Animated.View>
             </View>
         );

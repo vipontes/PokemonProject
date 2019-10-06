@@ -22,7 +22,6 @@ export default class MainScreen extends Component {
     performTimeConsumingTask = async () => {
 
         const self = this;
-
         return new Promise((resolve) =>
             setTimeout(
                 () => {
@@ -63,8 +62,9 @@ export default class MainScreen extends Component {
                         item => {
                             pokemon.front_default = item.sprites.front_default;
                             pokemon.back_default = item.sprites.back_default;
-                            pokemon.front_shiny = item.sprites.front_shiny;
-                            pokemon.back_shiny = item.sprites.back_shiny;
+                            pokemon.abilities = item.abilities;
+                            pokemon.types = item.types;
+                            pokemon.weight = item.weight;
 
                             pokemons.push(pokemon);
 
@@ -105,9 +105,35 @@ export default class MainScreen extends Component {
         }
     }
 
+    onPokemonPress = (item) => {
+        this.props.navigation.navigate('Detail', item)
+    }
+
+    getImage = (image) => {
+        return image != null ?
+            { uri: image } :
+            require("../../assets/images/pokeball.png");
+    }
+
+    serializeType = (types) => {
+
+        var serialized = '';
+        if (types != null) {
+            types.forEach((value, index) => {
+
+                if (serialized.length > 0) {
+                    serialized += '/';
+                }
+
+                serialized += value.type.name;
+            });
+        }
+
+        return serialized;
+    }
+
     render() {
         const { pokemons } = this.state;
-        const { navigate } = this.props.navigation;
 
         if (this.state.isLoading) {
             return <SplashScreen />;
@@ -116,7 +142,8 @@ export default class MainScreen extends Component {
         return (
             <>
                 <View style={styles.mainView}>
-                    <Image source={require("../../assets/images/pokemon-text.png")} style={{ height: 34, width: 92 }} />
+                    <Image source={require("../../assets/images/pokemon-text.png")}
+                        style={{ height: 34, width: 92 }} />
                 </View>
                 <FlatGrid
                     itemDimension={150}
@@ -129,10 +156,11 @@ export default class MainScreen extends Component {
                     renderItem={({ item, index }) => (
                         <TouchableOpacity
                             key={item.id}
-                            onPress={() => navigate('Detail', { name: item.name })}>
-                            <View style={[styles.itemContainer, { backgroundColor: '#ffffff' }]}>
-                                <Image source={{ uri: item.front_shiny }} style={{ height: 120, resizeMode: 'stretch', margin: 5 }} />
+                            onPress={() => this.onPokemonPress(item)}>
+                            <View style={styles.itemContainer}>
+                                <Image style={styles.itemImage} source={this.getImage(item.front_default)} />
                                 <Text style={styles.itemName}>{item.name}</Text>
+                                <Text style={styles.itemType}>{this.serializeType(item.types)}</Text>
                             </View>
                         </TouchableOpacity>
                     )}
@@ -153,15 +181,30 @@ const styles = StyleSheet.create({
         backgroundColor: '#ef5351',
         flex: 1,
     },
+    itemImage: {
+        alignItems: 'center', 
+        height: 100, 
+        width: 100, 
+        margin: 5
+    },
     itemContainer: {
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
         justifyContent: 'flex-end',
         borderRadius: 4,
         padding: 10,
         height: 150,
     },
     itemName: {
+        textTransform: 'capitalize',
         fontSize: 16,
-        color: '#000',
+        color: '#000000',
         fontWeight: '600',
     },
+    itemType: {
+        textTransform: 'capitalize',
+        fontWeight: '600',
+        fontSize: 14,
+        color: '#868686',
+      },
 });
