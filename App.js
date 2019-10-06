@@ -1,9 +1,32 @@
-import React from 'react'
-import Main from './src/screens/Main.js'
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-const App = () => {
-   return (
-      <Main />
-   )
-}
-export default App
+import MainScreen from './src/screens/MainScreen';
+import DetailScreen from './src/screens/DetailScreen';
+
+const MainNavigator = createStackNavigator({
+   Main: {
+      screen: MainScreen,
+      navigationOptions: {
+         header: null,
+      }
+   },
+   Detail: { screen: DetailScreen,
+      navigationOptions: {
+         title: 'Detalhes',
+         headerTintColor: '#ffffff',
+         headerStyle: {
+           backgroundColor: '#d32b2b',
+           borderBottomColor: '#ffffff',
+           borderBottomWidth: 0,
+         },
+         headerTitleStyle: {
+           fontSize: 22,
+         },         
+      } 
+   },
+});
+
+const App = createAppContainer(MainNavigator);
+
+export default App;
