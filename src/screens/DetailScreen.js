@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { Container, Navbar, StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import {
+    Container,
+    Navbar,
+    StyleSheet,
+    View,
+    Text,
+    SafeAreaView,
+    ScrollView,
+    Image,
+    TouchableOpacity
+} from 'react-native';
 
 export default class DetailScreen extends Component {
 
@@ -74,37 +84,45 @@ export default class DetailScreen extends Component {
         const { pokemonData } = this.state;
 
         return (
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <View style={styles.headerContent}>
-                        <TouchableOpacity onPress={() => this.onImagePress()}>
-                            <Image style={styles.avatar}
-                                source={this.getImage(pokemonData)} />
-                        </TouchableOpacity>
-                        <Text style={styles.name}>{pokemonData.name}</Text>
-                    </View>
-                </View>
-
-                <View style={styles.body}>
-                    <View style={styles.item}>
-                        <View style={styles.infoContent}>
-                            <Text style={styles.caption}>Type</Text>
-                            <Text style={styles.info}>{this.serializeType(pokemonData.types)}</Text>
-
-                            <Text style={styles.caption}>Ability</Text>
-                            <Text style={styles.info}>{this.serializeAbility(pokemonData.abilities)}</Text>
-
-                            <Text style={styles.caption}>Weight</Text>
-                            <Text style={styles.info}>{pokemonData.weight}</Text>
+            <SafeAreaView style={styles.container}>
+                <ScrollView style={styles.scrollView}>
+                    <View style={styles.header}>
+                        <View style={styles.headerContent}>
+                            <TouchableOpacity onPress={() => this.onImagePress()}>
+                                <Image style={styles.avatar}
+                                    source={this.getImage(pokemonData)} />
+                            </TouchableOpacity>
+                            <Text style={styles.name}>{pokemonData.name}</Text>
                         </View>
                     </View>
-                </View>
-            </View>
+
+                    <View style={styles.body}>
+                        <View style={styles.item}>
+                            <View style={styles.infoContent}>
+                                <Text style={styles.caption}>Type</Text>
+                                <Text style={styles.info}>{this.serializeType(pokemonData.types)}</Text>
+
+                                <Text style={styles.caption}>Ability</Text>
+                                <Text style={styles.info}>{this.serializeAbility(pokemonData.abilities)}</Text>
+
+                                <Text style={styles.caption}>Weight</Text>
+                                <Text style={styles.info}>{pokemonData.weight}</Text>
+                            </View>
+                        </View>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    scrollView: {
+        backgroundColor: '#ffffff',
+    },
     header: {
         backgroundColor: "#ef5351",
     },
