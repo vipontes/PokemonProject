@@ -49,7 +49,6 @@ export default class DetailScreen extends Component {
                 if (serialized.length > 0) {
                     serialized += '/';
                 }
-
                 serialized += value.type.name;
             });
         }
@@ -67,7 +66,6 @@ export default class DetailScreen extends Component {
                 if (serialized.length > 0) {
                     serialized += '/';
                 }
-
                 serialized += value.ability.name;
             });
         }

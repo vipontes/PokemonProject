@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
+import { Platform, StyleSheet, View, Image } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import PokemonListService from '../services/PokemonList';
 import PokemonService from '../services/Pokemon';
 import SplashScreen from './SplashScreen';
+import GridItem from '../components/GridItem';
 
 export default class MainScreen extends Component {
 
@@ -109,29 +110,6 @@ export default class MainScreen extends Component {
         this.props.navigation.navigate('Detail', item)
     }
 
-    getImage = (image) => {
-        return image != null ?
-            { uri: image } :
-            require("../../assets/images/pokeball.png");
-    }
-
-    serializeType = (types) => {
-
-        var serialized = '';
-        if (types != null) {
-            types.forEach((value, index) => {
-
-                if (serialized.length > 0) {
-                    serialized += '/';
-                }
-
-                serialized += value.type.name;
-            });
-        }
-
-        return serialized;
-    }
-
     render() {
         const { pokemons } = this.state;
 
@@ -153,17 +131,7 @@ export default class MainScreen extends Component {
                     onMomentumScrollEnd={() => this.onMomentumScrollEnd()}
                     onEndReachedThreshold={0}
                     onRefresh={() => this.onRefresh()}
-                    renderItem={({ item, index }) => (
-                        <TouchableOpacity
-                            key={item.id}
-                            onPress={() => this.onPokemonPress(item)}>
-                            <View style={styles.itemContainer}>
-                                <Image style={styles.itemImage} source={this.getImage(item.front_default)} />
-                                <Text style={styles.itemName}>{item.name}</Text>
-                                <Text style={styles.itemType}>{this.serializeType(item.types)}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    )}
+                    renderItem={({ item, index }) => (<GridItem pokemonData={item} onItemPress={this.onPokemonPress}/>)}
                 />
             </>
         );
@@ -180,31 +148,5 @@ const styles = StyleSheet.create({
     gridView: {
         backgroundColor: '#ef5351',
         flex: 1,
-    },
-    itemImage: {
-        alignItems: 'center', 
-        height: 100, 
-        width: 100, 
-        margin: 5
-    },
-    itemContainer: {
-        alignItems: 'center',
-        backgroundColor: '#ffffff',
-        justifyContent: 'flex-end',
-        borderRadius: 4,
-        padding: 10,
-        height: 150,
-    },
-    itemName: {
-        textTransform: 'capitalize',
-        fontSize: 16,
-        color: '#000000',
-        fontWeight: '600',
-    },
-    itemType: {
-        textTransform: 'capitalize',
-        fontWeight: '600',
-        fontSize: 14,
-        color: '#868686',
-      },
+    }
 });
