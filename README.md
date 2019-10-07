@@ -39,3 +39,5 @@ Para execução do app no Android, deve-se primeiramente inicializar o emulador 
 ```bach
 yarn android
 ```
+
+Obs.: Encontra-se na pasta project-resources um APK do app o qual pode ser instalado em dispositivos rodando Android.
