@@ -52,3 +52,9 @@ yarn android
 ```
 
 Obs.: Encontra-se na pasta project-resources, um APK do app o qual pode ser instalado em dispositivos rodando Android.
+
+![](screenshot.png)
+
+## Licença de uso
+
+[MIT](https://choosealicense.com/licenses/mit/)
